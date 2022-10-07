@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/owens/Desktop/CS240/FamilyMapServerStudent/FamilyMapServerDB.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="150"/><column_width id="3" width="3018"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,4:mainUser"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">drop table &quot;User&quot;;
+CREATE TABLE &quot;User&quot; (
+	&quot;username&quot;	TEXT NOT NULL UNIQUE,
+	&quot;password&quot;	TEXT NOT NULL,
+	&quot;email&quot;	TEXT NOT NULL,
+	&quot;firstName&quot;	TEXT NOT NULL,
+	&quot;lastName&quot;	TEXT NOT NULL,
+	&quot;gender&quot;	TEXT NOT NULL,
+	&quot;personID&quot;	INTEGER UNIQUE,
+	PRIMARY KEY(&quot;username&quot;)
+);
+
+CREATE TABLE &quot;Person&quot; (
+	&quot;personID&quot;	TEXT NOT NULL UNIQUE,
+	&quot;associatedUsername&quot;	TEXT NOT NULL UNIQUE,
+	&quot;firstName&quot;	TEXT NOT NULL,
+	&quot;lastName&quot;	TEXT NOT NULL,
+	&quot;gender&quot;	TEXT NOT NULL,
+	&quot;fatherID&quot;	TEXT,
+	&quot;motherID&quot;	TEXT,
+	&quot;spouseID&quot;	TEXT,
+	FOREIGN KEY(&quot;fatherID&quot;) REFERENCES Person(personID),
+	FOREIGN KEY(&quot;motherID&quot;) REFERENCES Person(personID),
+	FOREIGN KEY(&quot;spouseID&quot;) REFERENCES Person(personID),
+	FOREIGN KEY(&quot;associatedUsername&quot;) REFERENCES User(username),
+	PRIMARY KEY(&quot;personID&quot;)
+);
+
+CREATE TABLE &quot;Event&quot; (
+	&quot;eventID&quot;	TEXT NOT NULL UNIQUE,
+	&quot;associatedUsername&quot;	TEXT NOT NULL UNIQUE,
+	&quot;personID&quot;	TEXT NOT NULL UNIQUE,
+	&quot;latitude&quot;	REAL NOT NULL,
+	&quot;longitude&quot;	REAL NOT NULL,
+	&quot;country&quot;	TEXT NOT NULL,
+	&quot;city&quot;	TEXT NOT NULL,
+	&quot;eventType&quot;	TEXT NOT NULL,
+	&quot;year&quot;	INTEGER NOT NULL,
+	FOREIGN KEY(&quot;associatedUsername&quot;) REFERENCES User(username),
+	FOREIGN KEY(&quot;personID&quot;) REFERENCES Person(personID),
+	PRIMARY KEY(&quot;eventID&quot;)
+);
+
+CREATE TABLE &quot;Authtoken&quot; (
+	&quot;authtoken&quot;	TEXT NOT NULL UNIQUE,
+	&quot;username&quot;	TEXT NOT NULL UNIQUE,
+	PRIMARY KEY(&quot;authtoken&quot;),
+	FOREIGN KEY(&quot;username&quot;) REFERENCES User(username)
+);</sql><current_tab id="0"/></tab_sql></sqlb_project>
