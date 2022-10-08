@@ -11,10 +11,19 @@ import java.util.Set;
 
 public class Database {
 
+    /**
+     * Connection to the database
+     */
     private Connection conn;
 
     // Whenever we want to make a change to our database we will have to open a connection and use
     // Statements created by that connection to initiate transactions
+
+    /**
+     * Opens the connection to the database
+     * @return the connection to the database
+     * @throws DataAccessException
+     */
     public Connection openConnection() throws DataAccessException {
         try {
             // The Structure for this Connection is driver:language:path
@@ -34,6 +43,11 @@ public class Database {
         return conn;
     }
 
+    /**
+     * Gets the current connection
+     * @return the current connection
+     * @throws DataAccessException
+     */
     public Connection getConnection() throws DataAccessException {
         if (conn == null) {
             return openConnection();
@@ -49,6 +63,11 @@ public class Database {
     // IMPORTANT: IF YOU FAIL TO CLOSE A CONNECTION AND TRY TO REOPEN THE DATABASE THIS WILL CAUSE THE
     // DATABASE TO LOCK. YOUR CODE MUST ALWAYS CLOSE THE DATABASE NO MATTER WHAT ERRORS
     // OR PROBLEMS ARE ENCOUNTERED
+
+    /**
+     * Closes the current connection
+     * @param commit whether the changes should be submitted
+     */
     public void closeConnection(boolean commit) {
         try {
             if (commit) {

@@ -4,15 +4,54 @@ import model.Authtoken;
 import model.Person;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class AuthtokenDAO {
 
+    /**
+     * Connection to the database
+     */
     private final Connection conn;
 
+    /**
+     * Sets connection to the database
+     * @param conn connection to the database
+     */
     public AuthtokenDAO(Connection conn) {
         this.conn = conn;
     }
 
+    /**
+     * Gets everything in the authtoken table
+     * @return everything in the authtoken table in an array list
+     * @throws DataAccessException
+     */
+    public ArrayList<Authtoken> returnAll() throws DataAccessException {
+        ArrayList<Authtoken> authtokens = new ArrayList<Authtoken>();
+        String sql = "SELECT * FROM Authtoken";
+        ResultSet rs;
+        try (PreparedStatement stmt = conn.prepareStatement((sql))) {
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                authtokens.add(new Authtoken(rs.getString("authtoken"), rs.getString("username")));
+                while(rs.next()) {
+                    authtokens.add(new Authtoken(rs.getString("authtoken"), rs.getString("username")));
+                }
+                return authtokens;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding all authtokens in the database");
+        }
+    }
+
+    /**
+     * Inserts into the authtoken table
+     * @param authtoken authtoken that will be inserted
+     * @throws DataAccessException
+     */
     public void insert(Authtoken authtoken) throws DataAccessException {
         //We can structure our string to be similar to a sql command, but if we insert question
         //marks we can change them later with help from the statement
@@ -31,6 +70,12 @@ public class AuthtokenDAO {
         }
     }
 
+    /**
+     * Finds a specific authtoken
+     * @param authtoken the authtoken string to find
+     * @return The full authtoken found
+     * @throws DataAccessException
+     */
     public Authtoken find(String authtoken) throws DataAccessException {
         Authtoken authtoken1;
         ResultSet rs;
@@ -51,6 +96,10 @@ public class AuthtokenDAO {
 
     }
 
+    /**
+     * Deletes everything from the datatable
+     * @throws DataAccessException
+     */
     public void clear() throws DataAccessException {
         String sql = "DELETE FROM Authtoken";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

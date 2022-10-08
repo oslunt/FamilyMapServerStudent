@@ -4,15 +4,58 @@ import model.Person;
 import model.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class PersonDAO {
 
+    /**
+     * Connection to the database
+     */
     private final Connection conn;
 
+    /**
+     * Sets connection to the database
+     * @param conn connection to the database
+     */
     public PersonDAO(Connection conn) {
         this.conn = conn;
     }
 
+    /**
+     * Gets everything in the person table
+     * @return everything in the person table in an array list
+     * @throws DataAccessException
+     */
+    public ArrayList<Person> returnAll() throws DataAccessException {
+        ArrayList<Person> persons = new ArrayList<Person>();
+        String sql = "SELECT * FROM Person";
+        ResultSet rs;
+        try (PreparedStatement stmt = conn.prepareStatement((sql))) {
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                persons.add(new Person(rs.getString("personID"), rs.getString("associatedUsername"),
+                        rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
+                        rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID")));
+                while(rs.next()) {
+                    persons.add(new Person(rs.getString("personID"), rs.getString("associatedUsername"),
+                            rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
+                            rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID")));
+                }
+                return persons;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding all Persons in the database");
+        }
+    }
+
+    /**
+     * Inserts into the person table
+     * @param person person that will be inserted
+     * @throws DataAccessException
+     */
     public void insert(Person person) throws DataAccessException {
         //We can structure our string to be similar to a sql command, but if we insert question
         //marks we can change them later with help from the statement
@@ -37,6 +80,12 @@ public class PersonDAO {
         }
     }
 
+    /**
+     * Finds a specific person
+     * @param personID the personID string to find
+     * @return The full person found
+     * @throws DataAccessException
+     */
     public Person find(String personID) throws DataAccessException {
         Person person;
         ResultSet rs;
@@ -59,6 +108,10 @@ public class PersonDAO {
 
     }
 
+    /**
+     * Deletes everything from the datatable
+     * @throws DataAccessException
+     */
     public void clear() throws DataAccessException {
         String sql = "DELETE FROM Person";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

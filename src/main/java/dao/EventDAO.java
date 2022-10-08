@@ -1,16 +1,63 @@
 package dao;
 
 import model.Event;
+import model.Person;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class EventDAO {
+
+    /**
+     * Connection to the database
+     */
     private final Connection conn;
 
+    /**
+     * Sets connection to the database
+     * @param conn connection to the database
+     */
     public EventDAO(Connection conn) {
         this.conn = conn;
     }
 
+    /**
+     * Gets everything in the event table
+     * @return everything in the event table in an array list
+     * @throws DataAccessException
+     */
+    public ArrayList<Event> returnAll() throws DataAccessException {
+        ArrayList<Event> events = new ArrayList<Event>();
+        String sql = "SELECT * FROM Event";
+        ResultSet rs;
+        try (PreparedStatement stmt = conn.prepareStatement((sql))) {
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                events.add(new Event(rs.getString("EventID"), rs.getString("AssociatedUsername"),
+                        rs.getString("PersonID"), rs.getFloat("Latitude"), rs.getFloat("Longitude"),
+                        rs.getString("Country"), rs.getString("City"), rs.getString("EventType"),
+                        rs.getInt("Year")));
+                while(rs.next()) {
+                    events.add(new Event(rs.getString("EventID"), rs.getString("AssociatedUsername"),
+                            rs.getString("PersonID"), rs.getFloat("Latitude"), rs.getFloat("Longitude"),
+                            rs.getString("Country"), rs.getString("City"), rs.getString("EventType"),
+                            rs.getInt("Year")));
+                }
+                return events;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding all Events in the database");
+        }
+    }
+
+    /**
+     * Inserts into the event table
+     * @param event event that will be inserted
+     * @throws DataAccessException
+     */
     public void insert(Event event) throws DataAccessException {
         //We can structure our string to be similar to a sql command, but if we insert question
         //marks we can change them later with help from the statement
@@ -37,6 +84,12 @@ public class EventDAO {
         }
     }
 
+    /**
+     * Finds a specific event
+     * @param eventID the eventID string to find
+     * @return The full event found
+     * @throws DataAccessException
+     */
     public Event find(String eventID) throws DataAccessException {
         Event event;
         ResultSet rs;
@@ -60,6 +113,10 @@ public class EventDAO {
 
     }
 
+    /**
+     * Deletes everything from the datatable
+     * @throws DataAccessException
+     */
     public void clear() throws DataAccessException {
         String sql = "DELETE FROM Events";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
