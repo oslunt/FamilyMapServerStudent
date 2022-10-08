@@ -3,6 +3,9 @@ package result;
 import model.Event;
 import java.util.ArrayList;
 
+/**
+ * Result of MultiEventService
+ */
 public class MultiEventResult {
     /**
      * The events found by the service

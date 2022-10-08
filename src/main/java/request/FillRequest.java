@@ -1,5 +1,8 @@
 package request;
 
+/**
+ * Request object for FillService
+ */
 public class FillRequest {
 
     /**

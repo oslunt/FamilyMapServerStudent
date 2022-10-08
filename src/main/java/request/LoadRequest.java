@@ -6,6 +6,9 @@ import model.Event;
 import model.Person;
 import model.User;
 
+/**
+ * Request object for LoadService
+ */
 public class LoadRequest {
 
     /**

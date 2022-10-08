@@ -2,6 +2,9 @@ package model;
 
 import java.util.Objects;
 
+/**
+ * An event
+ */
 public class Event {
 
     /**

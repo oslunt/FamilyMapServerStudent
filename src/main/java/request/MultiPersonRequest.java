@@ -1,5 +1,8 @@
 package request;
 
+/**
+ * Request object for MultiPersonService
+ */
 public class MultiPersonRequest {
 
     /**

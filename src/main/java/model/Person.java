@@ -2,6 +2,9 @@ package model;
 
 import java.util.Objects;
 
+/**
+ * A Person
+ */
 public class Person {
 
     /**

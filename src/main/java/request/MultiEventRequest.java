@@ -1,5 +1,8 @@
 package request;
 
+/**
+ * Request object for MultiEventRequest
+ */
 public class MultiEventRequest {
 
     /**

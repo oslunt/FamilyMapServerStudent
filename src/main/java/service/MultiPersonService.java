@@ -4,6 +4,10 @@ import request.MultiPersonRequest;
 import model.Authtoken;
 import result.MultiPersonResult;
 
+/**
+ * Returns ALL family members of the current user.
+ * The current user is determined from the provided auth token.
+ */
 public class MultiPersonService {
     /**
      * Returns ALL family members of the current user.

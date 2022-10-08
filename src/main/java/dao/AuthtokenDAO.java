@@ -6,6 +6,9 @@ import model.Person;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Authtoken Data Access Object
+ */
 public class AuthtokenDAO {
 
     /**

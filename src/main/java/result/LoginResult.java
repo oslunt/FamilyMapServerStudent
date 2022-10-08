@@ -1,5 +1,8 @@
 package result;
 
+/**
+ * Result of LoginService
+ */
 public class LoginResult {
 
     /**

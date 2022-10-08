@@ -1,5 +1,8 @@
 package result;
 
+/**
+ * Result of SinglePersonService
+ */
 public class SinglePersonResult {
     /**
      * The associated username with the person

@@ -1,5 +1,8 @@
 package result;
 
+/**
+ * Result of ClearService
+ */
 public class ClearResult {
 
     /**

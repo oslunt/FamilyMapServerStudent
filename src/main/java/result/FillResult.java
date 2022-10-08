@@ -1,5 +1,8 @@
 package result;
 
+/**
+ * Result of FillService
+ */
 public class FillResult {
 
     /**

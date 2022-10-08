@@ -1,5 +1,8 @@
 package request;
 
+/**
+ * Request object for SinglePersonService
+ */
 public class SinglePersonRequest {
 
     /**

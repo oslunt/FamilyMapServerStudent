@@ -9,6 +9,9 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Database handler
+ */
 public class Database {
 
     /**

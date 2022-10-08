@@ -6,6 +6,9 @@ import model.User;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Person Data Access Object
+ */
 public class PersonDAO {
 
     /**

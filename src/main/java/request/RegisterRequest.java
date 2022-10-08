@@ -1,5 +1,8 @@
 package request;
 
+/**
+ * Request object for RegisterService
+ */
 public class RegisterRequest {
 
     /**

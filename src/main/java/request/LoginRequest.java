@@ -1,5 +1,8 @@
 package request;
 
+/**
+ * Request object for LoginService
+ */
 public class LoginRequest {
 
     /**

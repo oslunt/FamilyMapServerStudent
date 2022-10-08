@@ -1,5 +1,8 @@
 package result;
 
+/**
+ * Result of RegisterService
+ */
 public class RegisterResult {
     /**
      * Authtoken generated from register

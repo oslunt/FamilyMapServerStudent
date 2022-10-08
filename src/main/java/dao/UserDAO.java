@@ -7,6 +7,9 @@ import model.User;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * User Data Access Object
+ */
 public class UserDAO {
 
     /**

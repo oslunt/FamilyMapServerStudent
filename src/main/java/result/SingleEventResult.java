@@ -1,5 +1,8 @@
 package result;
 
+/**
+ * Result of SingleEventService
+ */
 public class SingleEventResult {
 
     /**

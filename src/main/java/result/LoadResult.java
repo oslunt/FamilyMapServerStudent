@@ -1,5 +1,8 @@
 package result;
 
+/**
+ * Result of LoadService
+ */
 public class LoadResult {
 
     /**

@@ -4,6 +4,9 @@ import model.Person;
 
 import java.util.ArrayList;
 
+/**
+ * Result of MultiPersonService
+ */
 public class MultiPersonResult {
     /**
      * The persons found by the service

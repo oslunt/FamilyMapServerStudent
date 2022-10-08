@@ -2,6 +2,9 @@ package model;
 
 import java.util.Objects;
 
+/**
+ * An Authtoken
+ */
 public class Authtoken {
 
     /**
