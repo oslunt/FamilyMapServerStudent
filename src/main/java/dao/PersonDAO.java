@@ -124,4 +124,16 @@ public class PersonDAO {
             throw new DataAccessException("Error encountered while clearing the event table");
         }
     }
+
+    public void clearUser(String username) throws DataAccessException {
+        String sql = "DELETE FROM Person WHERE username = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while clearing an username in the database");
+        }
+    }
 }
