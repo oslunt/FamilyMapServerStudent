@@ -3,7 +3,7 @@ package result;
 /**
  * Result of SingleEventService
  */
-public class SingleEventResult {
+public class SingleEventResult extends ParentResult {
 
     /**
      * The associated username with the event
@@ -51,23 +51,12 @@ public class SingleEventResult {
     private Integer year;
 
     /**
-     * The success of the service
-     */
-    private boolean success;
-
-    /**
-     * The error message of the service
-     */
-    private String message;
-
-    /**
      * Creates a unsuccessful service result
      * @param success signifies the failure of the service
      * @param message error message of the service
      */
     public SingleEventResult(boolean success, String message) {
-        this.success = success;
-        this.message = message;
+        super(success, message);
     }
 
     /**
@@ -84,6 +73,7 @@ public class SingleEventResult {
      * @param year year of the event
      */
     public SingleEventResult(boolean success, String associatedUsername, String eventID, String personID, Float latitude, Float longitude, String country, String city, String eventType, Integer year) {
+        super(success);
         this.associatedUsername = associatedUsername;
         this.eventID = eventID;
         this.personID = personID;
@@ -93,7 +83,6 @@ public class SingleEventResult {
         this.city = city;
         this.eventType = eventType;
         this.year = year;
-        this.success = success;
     }
 
     public String getAssociatedUsername() {
@@ -132,14 +121,6 @@ public class SingleEventResult {
         return year;
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
     public void setAssociatedUsername(String associatedUsername) {
         this.associatedUsername = associatedUsername;
     }
@@ -174,13 +155,5 @@ public class SingleEventResult {
 
     public void setYear(Integer year) {
         this.year = year;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

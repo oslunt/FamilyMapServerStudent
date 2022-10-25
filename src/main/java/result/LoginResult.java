@@ -3,7 +3,7 @@ package result;
 /**
  * Result of LoginService
  */
-public class LoginResult {
+public class LoginResult extends ParentResult {
 
     /**
      * Authtoken generated from login
@@ -21,23 +21,12 @@ public class LoginResult {
     private String personID;
 
     /**
-     * Success of the operation
-     */
-    private boolean success;
-
-    /**
-     * Error message if login failed
-     */
-    private String message;
-
-    /**
      * Unsuccessful login attempt result
      * @param success failure of login attempt
      * @param message reason why login failed
      */
     public LoginResult(boolean success, String message) {
-        this.success = success;
-        this.message = message;
+        super(success, message);
     }
 
     /**
@@ -48,10 +37,10 @@ public class LoginResult {
      * @param personID associated personID for logged-in user
      */
     public LoginResult(boolean success, String authtoken, String username, String personID) {
+        super(success);
         this.authtoken = authtoken;
         this.username = username;
         this.personID = personID;
-        this.success = success;
     }
 
     public String getAuthtoken() {
@@ -66,14 +55,6 @@ public class LoginResult {
         return personID;
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
     public void setAuthtoken(String authtoken) {
         this.authtoken = authtoken;
     }
@@ -84,13 +65,5 @@ public class LoginResult {
 
     public void setPersonID(String personID) {
         this.personID = personID;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

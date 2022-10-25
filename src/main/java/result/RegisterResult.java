@@ -3,7 +3,7 @@ package result;
 /**
  * Result of RegisterService
  */
-public class RegisterResult {
+public class RegisterResult extends ParentResult {
     /**
      * Authtoken generated from register
      */
@@ -19,15 +19,6 @@ public class RegisterResult {
      */
     private String personID;
 
-    /**
-     * Success of the operation
-     */
-    private boolean success;
-
-    /**
-     * Error message if register failed
-     */
-    private String message;
 
     /**
      * Unsuccessful register attempt result
@@ -35,8 +26,7 @@ public class RegisterResult {
      * @param message reason why register failed
      */
     public RegisterResult(boolean success, String message) {
-        this.success = success;
-        this.message = message;
+        super(success, message);
     }
 
     /**
@@ -47,10 +37,10 @@ public class RegisterResult {
      * @param personID associated personID for logged-in user
      */
     public RegisterResult(boolean success, String authtoken, String username, String personID) {
+        super(success);
         this.authtoken = authtoken;
         this.username = username;
         this.personID = personID;
-        this.success = success;
     }
 
     public String getAuthtoken() {
@@ -64,15 +54,6 @@ public class RegisterResult {
     public String getPersonID() {
         return personID;
     }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
     public void setAuthtoken(String authtoken) {
         this.authtoken = authtoken;
     }
@@ -83,13 +64,5 @@ public class RegisterResult {
 
     public void setPersonID(String personID) {
         this.personID = personID;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }
