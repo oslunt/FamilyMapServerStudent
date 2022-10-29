@@ -15,9 +15,8 @@ import java.io.IOException;
 public class RegisterHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-
         try {
-            if (exchange.getRequestMethod().toUpperCase().equals("GET")) {
+            if (exchange.getRequestMethod().toUpperCase().equals("POST")) {
                 InputStream reqBody = exchange.getRequestBody();
                 String reqData = HandlerHelper.readString(reqBody);
 

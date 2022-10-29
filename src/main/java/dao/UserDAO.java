@@ -32,7 +32,7 @@ public class UserDAO {
      */
     public ArrayList<User> returnAll() throws DataAccessException {
         ArrayList<User> users = new ArrayList<User>();
-        String sql = "SELECT * FROM User";
+        String sql = "SELECT * FROM User;";
         ResultSet rs;
         try (PreparedStatement stmt = conn.prepareStatement((sql))) {
             rs = stmt.executeQuery();
@@ -63,7 +63,7 @@ public class UserDAO {
     public void insert(User user) throws DataAccessException {
         //We can structure our string to be similar to a sql command, but if we insert question
         //marks we can change them later with help from the statement
-        String sql = "INSERT INTO User (username, password, email, firstName, lastName, gender, personID) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO User (username, password, email, firstName, lastName, gender, personID) VALUES(?,?,?,?,?,?,?);";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             //Using the statements built-in set(type) functions we can pick the question mark we want
             //to fill in and give it a proper value. The first argument corresponds to the first
@@ -116,7 +116,7 @@ public class UserDAO {
      * @throws DataAccessException
      */
     public void clear() throws DataAccessException {
-        String sql = "DELETE FROM User";
+        String sql = "DELETE FROM User;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.executeUpdate();
         } catch (SQLException e) {

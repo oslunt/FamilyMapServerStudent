@@ -1,5 +1,6 @@
 package dao;
 
+import model.Event;
 import model.Person;
 import model.User;
 
@@ -126,7 +127,7 @@ public class PersonDAO {
     }
 
     public void clearUser(String username) throws DataAccessException {
-        String sql = "DELETE FROM Person WHERE username = ?;";
+        String sql = "DELETE FROM Person WHERE associatedUsername = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
             stmt.executeUpdate();
@@ -134,6 +135,32 @@ public class PersonDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Error encountered while clearing an username in the database");
+        }
+    }
+
+    public ArrayList<Person> findFamilyPersons(String username) throws DataAccessException {
+        ArrayList<Person> persons = new ArrayList<Person>();
+        String sql = "SELECT * FROM Person Where associatedUsername = ?";
+        ResultSet rs;
+        try (PreparedStatement stmt = conn.prepareStatement((sql))) {
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                persons.add(new Person(rs.getString("personID"), rs.getString("associatedUsername"),
+                        rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
+                        rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID")));
+                while(rs.next()) {
+                    persons.add(new Person(rs.getString("personID"), rs.getString("associatedUsername"),
+                            rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
+                            rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID")));
+                }
+                return persons;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding all Persons in the database");
         }
     }
 }

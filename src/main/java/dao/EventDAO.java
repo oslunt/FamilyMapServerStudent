@@ -131,7 +131,7 @@ public class EventDAO {
     }
 
     public void clearUser(String username) throws DataAccessException {
-        String sql = "DELETE FROM Event WHERE username = ?;";
+        String sql = "DELETE FROM Event WHERE associatedUsername = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
             stmt.executeUpdate();
@@ -139,6 +139,34 @@ public class EventDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Error encountered while clearing an username in the database");
+        }
+    }
+
+    public ArrayList<Event> findFamilyEvents(String username) throws DataAccessException {
+        ArrayList<Event> events = new ArrayList<Event>();
+        String sql = "SELECT * FROM Event WHERE associatedUsername = ?";
+        ResultSet rs;
+        try (PreparedStatement stmt = conn.prepareStatement((sql))) {
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                events.add(new Event(rs.getString("eventID"), rs.getString("associatedUsername"),
+                        rs.getString("personID"), rs.getFloat("latitude"), rs.getFloat("longitude"),
+                        rs.getString("country"), rs.getString("city"), rs.getString("eventType"),
+                        rs.getInt("year")));
+                while(rs.next()) {
+                    events.add(new Event(rs.getString("eventID"), rs.getString("associatedUsername"),
+                            rs.getString("personID"), rs.getFloat("latitude"), rs.getFloat("longitude"),
+                            rs.getString("country"), rs.getString("city"), rs.getString("eventType"),
+                            rs.getInt("year")));
+                }
+                return events;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding all Events in the database");
         }
     }
 }

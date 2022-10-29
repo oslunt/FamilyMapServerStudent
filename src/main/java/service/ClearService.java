@@ -18,33 +18,39 @@ public class ClearService {
         Database db = new Database();
         Connection conn = db.openConnection();
 
-        UserDAO uDao = new UserDAO(conn);
-        AuthtokenDAO aDao = new AuthtokenDAO(conn);
-        PersonDAO pDao = new PersonDAO(conn);
-        EventDAO eDao = new EventDAO(conn);
-
-        uDao.clear();
-        aDao.clear();
-        pDao.clear();
-        eDao.clear();
-
         boolean success = true;
         String message = "";
-        if(uDao.returnAll().size() > 0){
+
+        UserDAO uDao = new UserDAO(conn);
+        uDao.clear();
+        if(uDao.returnAll() != null){
             success = false;
             message += "\nUser datatable failed to clear";
         }
-        if(aDao.returnAll().size() > 0){
+
+        AuthtokenDAO aDao = new AuthtokenDAO(conn);
+        aDao.clear();
+        if(aDao.returnAll() != null){
             success = false;
             message += "\nAuthtoken datatable failed to clear";
         }
-        if(pDao.returnAll().size() > 0){
+
+        PersonDAO pDao = new PersonDAO(conn);
+        pDao.clear();
+        if(pDao.returnAll() != null){
             success = false;
             message += "\nPerson datatable failed to clear";
         }
-        if(eDao.returnAll().size() > 0){
+
+        EventDAO eDao = new EventDAO(conn);
+        eDao.clear();
+        if(eDao.returnAll() != null){
             success = false;
             message += "\nEvent datatable failed to clear";
+        }
+
+        if(message.length() == 0){
+            message = "Datatables cleared successfully";
         }
 
         ClearResult result = new ClearResult(success, message);

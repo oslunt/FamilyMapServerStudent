@@ -3,6 +3,7 @@ package handler;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.Headers;
+import dao.DataAccessException;
 import result.ClearResult;
 import service.ClearService;
 
@@ -46,6 +47,8 @@ public class ClearHandler implements HttpHandler {
 
             // Display/log the stack trace
             e.printStackTrace();
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 }

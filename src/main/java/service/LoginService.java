@@ -27,7 +27,7 @@ public class LoginService {
 
             UserDAO uDAO = new UserDAO(conn);
             User u = uDAO.find(l.getUsername());
-            if(u.getPassword() == l.getPassword()) {
+            if(u.getPassword().equals(l.getPassword())) {
                 String authToken = UUID.randomUUID().toString();
                 AuthtokenDAO aDao = new AuthtokenDAO(conn);
                 aDao.insert(new Authtoken(authToken, l.getUsername()));
