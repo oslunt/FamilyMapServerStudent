@@ -26,48 +26,61 @@ public class LoadService {
             conn = db.openConnection();
             boolean success = true;
             String message = "";
+            int usersSize = 0;
+            int personsSize = 0;
+            int eventsSize = 0;
 
-            UserDAO uDao = new UserDAO(conn);
-            int startingU = 0;
-            if(uDao.returnAll() != null) {
-                startingU = uDao.returnAll().size();
-            }
-            for(int i = 0; i < lr.getUsers().size(); i++) {
-                uDao.insert(lr.getUsers().get(i));
-            }
-            if(lr.getUsers().size() != uDao.returnAll().size() - startingU) {
-                success = false;
-                message += "\nError adding users";
-            }
-
-            PersonDAO pDao = new PersonDAO(conn);
-            int startingP = 0;
-            if(pDao.returnAll() != null) {
-                startingP = pDao.returnAll().size();
-            }
-            for(int i = 0; i < lr.getPersons().size(); i++) {
-                pDao.insert(lr.getPersons().get(i));
-            }
-            if(lr.getPersons().size() != pDao.returnAll().size() - startingP) {
-                success = false;
-                message += "\nError adding persons";
+            if(lr.getUsers() != null) {
+                UserDAO uDao = new UserDAO(conn);
+                int startingU = 0;
+                if(uDao.returnAll() != null) {
+                    startingU = uDao.returnAll().size();
+                }
+                for(int i = 0; i < lr.getUsers().size(); i++) {
+                    uDao.insert(lr.getUsers().get(i));
+                }
+                usersSize = lr.getUsers().size();
+                if(usersSize != uDao.returnAll().size() - startingU) {
+                    success = false;
+                    message += "\nError adding users";
+                }
             }
 
-            EventDAO eDao = new EventDAO(conn);
-            int startingE = 0;
-            if(eDao.returnAll() != null) {
-                startingE = eDao.returnAll().size();
+            if(lr.getPersons() != null) {
+                PersonDAO pDao = new PersonDAO(conn);
+                int startingP = 0;
+                if(pDao.returnAll() != null) {
+                    startingP = pDao.returnAll().size();
+                }
+                for(int i = 0; i < lr.getPersons().size(); i++) {
+                    pDao.insert(lr.getPersons().get(i));
+                }
+                personsSize = lr.getPersons().size();
+                if(personsSize != pDao.returnAll().size() - startingP) {
+                    success = false;
+                    message += "\nError adding persons";
+                }
             }
-            for(int i = 0; i < lr.getEvents().size(); i++) {
-                eDao.insert(lr.getEvents().get(i));
+
+            if(lr.getEvents() != null) {
+                EventDAO eDao = new EventDAO(conn);
+                int startingE = 0;
+                if(eDao.returnAll() != null) {
+                    startingE = eDao.returnAll().size();
+                }
+                for(int i = 0; i < lr.getEvents().size(); i++) {
+                    eDao.insert(lr.getEvents().get(i));
+                }
+                eventsSize = lr.getEvents().size();
+                if(eventsSize != eDao.returnAll().size() - startingE) {
+                    success = false;
+                    message += "\nError adding events";
+                }
             }
-            if(lr.getEvents().size() != eDao.returnAll().size() - startingE) {
-                success = false;
-                message += "\nError adding events";
-            }
+
 
             if(message.length() == 0) {
-                message = "Successfully added " + lr.getUsers().size() + " users, " + lr.getPersons().size() + " persons, and " + lr.getEvents().size() + " events to the database.";
+                message = "Successfully added " + usersSize + " users, " + personsSize + " persons, and " + eventsSize + " events to the database.";
             }
 
             db.closeConnection(true);

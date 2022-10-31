@@ -42,8 +42,8 @@ public class RegisterService {
 
                 db.closeConnection(true);
 
-                //FillService fs = new FillService();
-                //fs.fill(new FillRequest(r.getUsername()));
+                FillService fs = new FillService();
+                fs.fill(new FillRequest(r.getUsername()));
 
                 return new RegisterResult(true, authToken, r.getUsername(), r.getFirstName() + "_" + r.getLastName());
             }
