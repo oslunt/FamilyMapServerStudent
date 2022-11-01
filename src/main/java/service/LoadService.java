@@ -21,11 +21,15 @@ public class LoadService {
      * @return Returns the success or failure of the operation
      */
     public LoadResult load(LoadRequest lr) {
+        if(lr.getUsers() == null && lr.getPersons() == null && lr.getEvents() == null) {
+            return new LoadResult(false, "Error: nothing to load");
+        }
         Database db = new Database();
         Connection conn = null;
         try {
             ClearService s = new ClearService();
             ClearResult r;
+
             if(lr.getUsers() != null) {
                 r = s.clear();
             }

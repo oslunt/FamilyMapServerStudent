@@ -15,6 +15,7 @@ public class PersonDAOTest {
     private Database db;
     private Person randPerson;
     private Person randPerson2;
+    private Person randPerson3;
     private PersonDAO pDao;
 
     @BeforeEach
@@ -22,6 +23,7 @@ public class PersonDAOTest {
         db = new Database();
         randPerson = new Person("person123", "username123", "bob", "temp", "M");
         randPerson2 = new Person("person456", "username456", "mary", "temp", "F", "person123","", "");
+        randPerson3 = new Person("person789", "username123", "joe", "temp", "M");
 
         Connection conn = db.getConnection();
         pDao = new PersonDAO(conn);
@@ -70,5 +72,48 @@ public class PersonDAOTest {
         pDao.clear();
         persons = pDao.returnAll();
         assertNull(persons);
+    }
+
+    @Test
+    public void returnAllPass() throws DataAccessException {
+        pDao.insert(randPerson);
+        pDao.insert(randPerson2);
+        assertEquals(2, pDao.returnAll().size());
+    }
+
+    @Test
+    public void returnAllFail() throws DataAccessException {
+        assertNull(pDao.returnAll());
+    }
+
+    @Test
+    public void clearUserPass() throws DataAccessException {
+        pDao.insert(randPerson);
+        pDao.insert(randPerson2);
+        pDao.insert(randPerson3);
+        pDao.clearUser("username123");
+        assertEquals(1, pDao.returnAll().size());
+    }
+
+    @Test
+    public void clearUserFail() throws DataAccessException {
+        pDao.insert(randPerson);
+        pDao.insert(randPerson3);
+        pDao.clearUser("username456");
+        assertEquals(2, pDao.returnAll().size());
+    }
+
+    @Test
+    public void findFamilyPersonsPass() throws DataAccessException {
+        pDao.insert(randPerson);
+        pDao.insert(randPerson3);
+        pDao.insert(randPerson2);
+        assertEquals(2, pDao.findFamilyPersons("username123").size());
+    }
+
+    @Test
+    public void findFamilyPersonsFail() throws DataAccessException {
+        pDao.insert(randPerson2);
+        assertNull(pDao.findFamilyPersons("username123"));
     }
 }

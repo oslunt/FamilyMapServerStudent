@@ -71,4 +71,16 @@ public class UserDAOTest {
         users = uDao.returnAll();
         assertNull(users);
     }
+
+    @Test
+    public void returnAllPass() throws DataAccessException {
+        uDao.insert(randUser);
+        uDao.insert(randUser2);
+        assertEquals(2, uDao.returnAll().size());
+    }
+
+    @Test
+    public void returnAllFail() throws DataAccessException {
+        assertNull(uDao.returnAll());
+    }
 }

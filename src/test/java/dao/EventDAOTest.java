@@ -14,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EventDAOTest {
     private Database db;
     private Event bestEvent;
+    private Event bestEvent2;
+    private Event bestEvent3;
     private EventDAO eDao;
 
     @BeforeEach
@@ -23,6 +25,12 @@ public class EventDAOTest {
         db = new Database();
         // and a new event with random data
         bestEvent = new Event("Biking_123A", "Gale", "Gale123A",
+                35.9f, 140.1f, "Japan", "Ushiku",
+                "Biking_Around", 2016);
+        bestEvent2 = new Event("Biking_123B", "Gabe", "Gabe123B",
+                35.9f, 140.1f, "Japan", "Ushiku",
+                "Biking_Around", 2016);
+        bestEvent3 = new Event("Biking_123C", "Gale", "Gale123A",
                 35.9f, 140.1f, "Japan", "Ushiku",
                 "Biking_Around", 2016);
 
@@ -95,5 +103,48 @@ public class EventDAOTest {
         eDao.clear();
         events = eDao.returnAll();
         assertNull(events);
+    }
+
+    @Test
+    public void returnAllPass() throws DataAccessException {
+        eDao.insert(bestEvent);
+        eDao.insert(bestEvent2);
+        assertEquals(2, eDao.returnAll().size());
+    }
+
+    @Test
+    public void returnAllFail() throws DataAccessException {
+        assertNull(eDao.returnAll());
+    }
+
+    @Test
+    public void clearUserPass() throws DataAccessException {
+        eDao.insert(bestEvent);
+        eDao.insert(bestEvent2);
+        eDao.insert(bestEvent3);
+        eDao.clearUser("Gale");
+        assertEquals(1, eDao.returnAll().size());
+    }
+
+    @Test
+    public void clearUserFail() throws DataAccessException {
+        eDao.insert(bestEvent);
+        eDao.insert(bestEvent3);
+        eDao.clearUser("Gabe");
+        assertEquals(2, eDao.returnAll().size());
+    }
+
+    @Test
+    public void findFamilyEventsPass() throws DataAccessException {
+        eDao.insert(bestEvent);
+        eDao.insert(bestEvent3);
+        eDao.insert(bestEvent2);
+        assertEquals(2, eDao.findFamilyEvents("Gale").size());
+    }
+
+    @Test
+    public void findFamilyEventsFail() throws DataAccessException {
+        eDao.insert(bestEvent2);
+        assertNull(eDao.findFamilyEvents("Gale"));
     }
 }

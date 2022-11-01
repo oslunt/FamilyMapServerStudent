@@ -41,6 +41,10 @@ public class FillService {
             UserDAO uDao = new UserDAO(conn);
             User u = uDao.find(f.getUsername());
 
+            if(u == null) {
+                db.closeConnection(false);
+                return new FillResult(false, "Error: user not found");
+            }
             PersonDAO pDao = new PersonDAO(conn);
             pDao.clearUser(f.getUsername());
 
