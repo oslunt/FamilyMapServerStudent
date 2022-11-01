@@ -11,7 +11,7 @@ public class MultiPersonResult extends ParentResult {
     /**
      * The persons found by the service
      */
-    private ArrayList<Person> persons;
+    private ArrayList<Person> data;
 
     /**
      * Creates a unsuccessful service result
@@ -25,18 +25,18 @@ public class MultiPersonResult extends ParentResult {
     /**
      * Creates a successful service result
      * @param success signifies the success of the service
-     * @param persons the persons the service was able to find
+     * @param data the persons the service was able to find
      */
-    public MultiPersonResult(boolean success, ArrayList<Person> persons) {
+    public MultiPersonResult(boolean success, ArrayList<Person> data) {
         super(success);
-        this.persons = persons;
+        this.data = data;
     }
 
     public ArrayList<Person> getPersons() {
-        return persons;
+        return data;
     }
 
     public void setPersons(ArrayList<Person> persons) {
-        this.persons = persons;
+        this.data = persons;
     }
 }

@@ -32,9 +32,10 @@ public class SingleEventService {
 
             AuthtokenDAO aDao = new AuthtokenDAO(conn);
             if(aDao.find(ser.getAuthtoken()) != null) {
+                Authtoken a = aDao.find(ser.getAuthtoken());
                 EventDAO eDAO = new EventDAO(conn);
 
-                if(eDAO.find(ser.getEventID()) != null) {
+                if(eDAO.find(ser.getEventID()) != null  && eDAO.find(ser.getEventID()).getAssociatedUsername().equals(a.getUsername())) {
                     Event e = eDAO.find(ser.getEventID());
 
                     db.closeConnection(true);
@@ -42,12 +43,12 @@ public class SingleEventService {
                 }
                 else {
                     db.closeConnection(true);
-                    return new SingleEventResult(false, "EventID not found");
+                    return new SingleEventResult(false, "Error: EventID not found");
                 }
             }
             else {
                 db.closeConnection(true);
-                return new SingleEventResult(false, "Authtoken invalid");
+                return new SingleEventResult(false, "Error: Authtoken invalid");
             }
         } catch (DataAccessException e) {
             throw new RuntimeException(e);

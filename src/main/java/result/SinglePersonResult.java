@@ -3,7 +3,7 @@ package result;
 /**
  * Result of SinglePersonService
  */
-public class SinglePersonResult {
+public class SinglePersonResult extends ParentResult {
     /**
      * The associated username with the person
      */
@@ -44,39 +44,32 @@ public class SinglePersonResult {
      */
     private String spouseID;
 
-    /**
-     * The success of the service
-     */
-    private boolean success;
-
-    /**
-     * The error message of the service
-     */
-    private String message;
 
     /**
      * Creates a unsuccessful service result
+     *
      * @param success signifies the failure of the service
      * @param message error message of the service
      */
     public SinglePersonResult(boolean success, String message) {
-        this.success = success;
-        this.message = message;
+        super(success, message);
     }
 
     /**
      * Creates a successful service result
-     * @param success signifies the success of the service
+     *
+     * @param success            signifies the success of the service
      * @param associatedUsername associatedUsername of the person
-     * @param personID personID of the person
-     * @param firstName firstName of the person
-     * @param lastName lastName of the person
-     * @param gender gender of the person
-     * @param fatherID fatherID of the person
-     * @param motherID motherID of the person
-     * @param spouseID spouseID of the person
+     * @param personID           personID of the person
+     * @param firstName          firstName of the person
+     * @param lastName           lastName of the person
+     * @param gender             gender of the person
+     * @param fatherID           fatherID of the person
+     * @param motherID           motherID of the person
+     * @param spouseID           spouseID of the person
      */
     public SinglePersonResult(boolean success, String associatedUsername, String personID, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID) {
+        super(success);
         this.associatedUsername = associatedUsername;
         this.personID = personID;
         this.firstName = firstName;
@@ -85,7 +78,6 @@ public class SinglePersonResult {
         this.fatherID = fatherID;
         this.motherID = motherID;
         this.spouseID = spouseID;
-        this.success = success;
     }
 
     public String getAssociatedUsername() {
@@ -120,14 +112,6 @@ public class SinglePersonResult {
         return spouseID;
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
     public void setAssociatedUsername(String associatedUsername) {
         this.associatedUsername = associatedUsername;
     }
@@ -158,13 +142,5 @@ public class SinglePersonResult {
 
     public void setSpouseID(String spouseID) {
         this.spouseID = spouseID;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

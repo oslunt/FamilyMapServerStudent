@@ -27,7 +27,7 @@ public class LoginService {
 
             UserDAO uDAO = new UserDAO(conn);
             User u = uDAO.find(l.getUsername());
-            if(u.getPassword().equals(l.getPassword())) {
+            if(u != null && u.getPassword().equals(l.getPassword())) {
                 String authToken = UUID.randomUUID().toString();
                 AuthtokenDAO aDao = new AuthtokenDAO(conn);
                 aDao.insert(new Authtoken(authToken, l.getUsername()));
@@ -36,7 +36,7 @@ public class LoginService {
             }
             else {
                 db.closeConnection(true);
-                return new LoginResult(false, "Incorrect username or password");
+                return new LoginResult(false, "Error: Incorrect username or password");
             }
         } catch (DataAccessException e) {
             throw new RuntimeException(e);

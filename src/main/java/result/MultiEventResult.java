@@ -10,7 +10,7 @@ public class MultiEventResult extends ParentResult {
     /**
      * The events found by the service
      */
-    private ArrayList<Event> events;
+    private ArrayList<Event> data;
 
     /**
      * Creates a unsuccessful service result
@@ -24,18 +24,18 @@ public class MultiEventResult extends ParentResult {
     /**
      * Creates a successful service result
      * @param success signifies the success of the service
-     * @param events the events the service was able to find
+     * @param data the events the service was able to find
      */
-    public MultiEventResult(boolean success, ArrayList<Event> events) {
+    public MultiEventResult(boolean success, ArrayList<Event> data) {
         super(success);
-        this.events = events;
+        this.data = data;
     }
 
     public ArrayList<Event> getEvents() {
-        return events;
+        return data;
     }
 
-    public void setEvents(ArrayList<Event> events) {
-        this.events = events;
+    public void setEvents(ArrayList<Event> data) {
+        this.data = data;
     }
 }

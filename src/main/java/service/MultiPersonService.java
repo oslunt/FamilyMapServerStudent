@@ -42,7 +42,7 @@ public class MultiPersonService {
             }
             else {
                 db.closeConnection(true);
-                return new MultiPersonResult(false, "Authtoken invalid");
+                return new MultiPersonResult(false, "Error: Authtoken invalid");
             }
         } catch (DataAccessException e) {
             throw new RuntimeException(e);

@@ -50,7 +50,7 @@ public class ClearService {
         }
 
         if(message.length() == 0){
-            message = "Datatables cleared successfully";
+            message = "Clear succeeded";
         }
 
         ClearResult result = new ClearResult(success, message);

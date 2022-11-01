@@ -41,7 +41,7 @@ public class MultiEventService {
             }
             else {
                 db.closeConnection(true);
-                return new MultiEventResult(false, "Authtoken invalid");
+                return new MultiEventResult(false, "Error: Authtoken invalid");
             }
         } catch (DataAccessException e) {
             throw new RuntimeException(e);

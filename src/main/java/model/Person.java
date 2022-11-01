@@ -56,7 +56,11 @@ public class Person {
      * @param gender Person’s gender
      */
     public Person(String personID, String associatedUsername, String firstName, String lastName, String gender) {
-        this(personID, associatedUsername, firstName, lastName, gender, "", "", "");
+        this.personID = personID;
+        this.associatedUsername = associatedUsername;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
     }
 
     /**

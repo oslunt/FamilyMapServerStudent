@@ -49,7 +49,7 @@ public class RegisterService {
             }
             else {
                 db.closeConnection(true);
-                return  new RegisterResult(false, "Username already exists");
+                return  new RegisterResult(false, "Error: Username already exists");
             }
         } catch (DataAccessException e) {
             throw new RuntimeException(e);

@@ -32,9 +32,10 @@ public class SinglePersonService {
 
             AuthtokenDAO aDao = new AuthtokenDAO(conn);
             if(aDao.find(spr.getAuthtoken()) != null) {
+                Authtoken a = aDao.find(spr.getAuthtoken());
                 PersonDAO pDAO = new PersonDAO(conn);
 
-                if(pDAO.find(spr.getPersonID()) != null) {
+                if(pDAO.find(spr.getPersonID()) != null && pDAO.find(spr.getPersonID()).getAssociatedUsername().equals(a.getUsername())) {
                     Person p = pDAO.find(spr.getPersonID());
 
                     db.closeConnection(true);
@@ -42,12 +43,12 @@ public class SinglePersonService {
                 }
                 else {
                     db.closeConnection(true);
-                    return new SinglePersonResult(false, "PersonID not found");
+                    return new SinglePersonResult(false, "Error: PersonID not found");
                 }
             }
             else {
                 db.closeConnection(true);
-                return new SinglePersonResult(false, "Authtoken invalid");
+                return new SinglePersonResult(false, "Error: Authtoken invalid");
             }
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
