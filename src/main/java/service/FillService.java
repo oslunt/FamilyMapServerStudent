@@ -62,6 +62,7 @@ public class FillService {
 
             generate(0, f.getGenerations(), f.getUsername(), u.getFirstName(), u.getLastName(), u.getGender(), persons, events, "", fNames, lNames, femNames, new HashSet<>());
 
+            //After generating the persons and events that will happen we pass it through to the loadservice to actually insert into the database
             LoadService ls = new LoadService();
             LoadResult lr = ls.load(new LoadRequest(null, persons, events));
             if(lr.isSuccess()) {
@@ -77,13 +78,18 @@ public class FillService {
     }
 
     public void generate(int curGen, int desGen, String username, String fName, String lName, String gender, ArrayList<Person> p, ArrayList<Event> e, String spouse, String[] fNames, String[] lNames, String[] femNames, Set<String> uniqueNames) {
+        //Checks to see if the current Gen is less than the desired gen
         if(curGen < desGen) {
+
+            //Randomly selecting firstname and lastname for the father and mother element of the person
             int rnd = new Random().nextInt(fNames.length);
             String fatherFName = fNames[rnd];
             rnd = new Random().nextInt(femNames.length);
             String motherFName = femNames[rnd];
             rnd = new Random().nextInt(lNames.length);
             String lastName = lNames[rnd];
+
+            //Checking to make sure that the personIDs are not already created
             while(uniqueNames.contains(fatherFName + "_" + lastName)) {
                 rnd = new Random().nextInt(fNames.length);
                 fatherFName = fNames[rnd];
@@ -94,9 +100,15 @@ public class FillService {
                 motherFName = femNames[rnd];
             }
             uniqueNames.add(motherFName + "_" + lastName);
+
+            //Adding the newly created person with father, mother, and spouseIDs
             p.add(new Person(fName + "_" + lName, username, fName, lName, gender, fatherFName + "_" + lastName, motherFName + "_" + lastName, spouse));
+
+            //Recursively calling this function to generate full family tree
             generate(curGen + 1, desGen, username, fatherFName, lastName, "m", p, e, motherFName + "_" + lastName, fNames, lNames, femNames, uniqueNames);
             generate(curGen + 1, desGen, username, motherFName, lastName, "f", p, e, fatherFName + "_" + lastName, fNames, lNames, femNames, uniqueNames);
+
+            //Adding events for each of the newly created users
             e.add(new Event(fName + "_" +lName + "_Birth", username, fName + "_" + lName, (float)34.0522, (float)118.2437, "USA", "Los Angeles", "birthday", 2000 - (30*curGen)));
             if(curGen != 0) {
                 e.add(new Event(fName + "_" +lName + "_Marriage", username, fName + "_" + lName, (float)34.0522, (float)118.2437, "USA", "Los Angeles", "marriage", 2000 - (30 * curGen - 25)));

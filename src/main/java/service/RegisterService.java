@@ -42,6 +42,7 @@ public class RegisterService {
 
                 db.closeConnection(true);
 
+                //Calls the fillservice to then populate the user with their family tree
                 FillService fs = new FillService();
                 fs.fill(new FillRequest(r.getUsername()));
 

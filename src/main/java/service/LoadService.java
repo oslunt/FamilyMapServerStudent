@@ -27,6 +27,8 @@ public class LoadService {
         Database db = new Database();
         Connection conn = null;
         try {
+            //I was having some errors with data left over in users when a user passes in null for users
+            //To avoid that error I just needed to check that users were null before clearing
             ClearService s = new ClearService();
             ClearResult r;
 
@@ -44,6 +46,9 @@ public class LoadService {
             int eventsSize = 0;
 
             if(r.isSuccess()) {
+
+                //I was having the same problems with null as mentioned above so just checking to make sure it was not null
+                //Getting the size before to check to make sure everything will be inserted correctly
                 if(lr.getUsers() != null) {
                     UserDAO uDao = new UserDAO(conn);
                     int startingU = 0;

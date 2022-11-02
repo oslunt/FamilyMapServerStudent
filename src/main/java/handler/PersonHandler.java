@@ -22,6 +22,7 @@ public class PersonHandler implements HttpHandler {
                 String url = exchange.getRequestURI().toString();
                 String[] args = url.split("/");
 
+                //Checking to see if the request is for a single person or all user persons
                 if (args.length > 2) {
                     String personID = args[2];
 

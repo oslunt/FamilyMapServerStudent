@@ -10,6 +10,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
 public class HandlerHelper {
+    //Just a bunch of helpful methods I use to help in the handlers
     public static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static Object decode(String json, Type typeofT) {

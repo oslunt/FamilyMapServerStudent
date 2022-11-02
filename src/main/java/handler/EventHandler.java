@@ -22,6 +22,7 @@ public class EventHandler implements HttpHandler {
                 String url = exchange.getRequestURI().toString();
                 String[] args = url.split("/");
 
+                //Just checking to see if this is for a single event or for all user events
                 if (args.length > 2) {
                     String eventID = args[2];
 

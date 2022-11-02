@@ -25,6 +25,7 @@ public class FillHandler implements HttpHandler {
                 String[] args = url.split("/");
                 String username = args[2];
 
+                //Checking to see if generations is specified
                 FillRequest request;
                 if (args.length > 3) {
                     int gens = Integer.parseInt(args[3]);
